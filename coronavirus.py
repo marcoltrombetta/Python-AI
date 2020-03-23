@@ -46,15 +46,14 @@ custom_paramnames = [
 
 df = pd.DataFrame(df, columns = custom_paramnames)
 #df = df.where((df['death']=='1')  & (df['age']>65))
-df.dropna(inplace=True)
-df.drop_duplicates(inplace=True)
 
-df2=df.groupby(['country'])['death'].count()
+g=df.groupby(["country"])["death"].count() #count of death per country
+g_name=df.groupby(["country"])["death"].count().index.get_level_values('country') #get country names
 
-objects = df2
+objects = np.array(g_name)
 
-y_pos = np.array(df2)
-performance = df.groupby(['country','death'])['country'].count()
+y_pos = np.array(g)
+performance = np.array(g)
 plt.bar(y_pos, performance, align='center', alpha=0.5)
 plt.xticks(y_pos, objects)
 plt.ylabel('Death')
